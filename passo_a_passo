@@ -1,0 +1,24 @@
+A instrução select espera até que uma das goroutines envie uma resposta para o canal ch. O primeiro valor recebido será atribuído à variável address.
+
+Como as goroutines funcionam no seu contexto
+Goroutines: São leves threads gerenciadas pelo runtime do Go. Aqui, você tem duas goroutines: uma para cada função que faz a requisição a uma API diferente.
+
+Comunicação via canal: As goroutines comunicam o resultado de suas operações de rede de volta para a função principal via o canal ch.
+
+Passo a passo detalhado
+Goroutine da BrasilAPI:
+
+Faz uma requisição HTTP para a API BrasilAPI.
+Lê a resposta e a decodifica em uma estrutura Address.
+Envia a estrutura preenchida para o canal ch.
+Goroutine da ViaCEP:
+
+Faz uma requisição HTTP para a API ViaCEP.
+Lê a resposta e a decodifica em uma estrutura Address.
+Envia a estrutura preenchida para o canal ch.
+Instrução select na função main:
+
+Espera até que uma das goroutines envie uma mensagem para o canal ch.
+Recebe a mensagem e a armazena em address.
+Verifica qual API respondeu mais rápido (baseado no campo API).
+Imprime os dados do endereço recebido.
