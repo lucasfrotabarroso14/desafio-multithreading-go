@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
 
 type Address struct {
@@ -93,6 +94,9 @@ func main() {
 		} else {
 			fmt.Println("Erro ao obter o endereço.")
 		}
+	case <-time.After(1 * time.Second):
+		fmt.Println("Timeout: a requisicao demorou mais de um segundo ")
+
 	}
 
 }
